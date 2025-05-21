@@ -1,6 +1,12 @@
 const express = require("express")
 const PORT =8000
 const app = express()
+const cors = require('cors');
+const questionRoute = require('./questions/DatingQuestions')
+
+
+app.use(cors());
+app.use(express.json());
 
 
 const redFlags = [
@@ -31,6 +37,29 @@ const redFlags = [
     },
 ];
 
+ // const daterType=[
+ //     {
+ //         name: "Chill Lover",
+ //         description:"Effortless, secure, and drama-free. You don’t overthink, you don’t stress, and your energy is top-tier. Just make sure you’re not so chill that people think you don’t care.",
+ //         criteria: {chillAns: "A", deluluAns: "A", redFlagAns: "A" , difficultAs:"A"}
+ //     },
+ //     {
+ //         name: "Delulu lover",
+ //         description:"You mean well, but dating feels like a puzzle you can’t quite solve. Your heart is in the right place, but your decisions? Questionable. You need better strategies if you want love to last",
+ //         criteria: {chillAns: "B", deluluAns: "B", redFlagAns: "C" , difficultAs:"D"}
+ //     },
+ //     {
+ //         name: "Walking Red Flag",
+ //         description:"Your toxic energy is magnetic, and honestly, people love the drama. You bring passion, excitement, and chaos, but at what cost? Relationships shouldn’t feel like a reality show.",
+ //         criteria: {chillAns: "C", deluluAns: "C", redFlagAns: "C" , difficultAs:"C"}
+ //     },
+ //     {
+ //         name: "Difficult to Date",
+ //         description:"You’re mean-spirited and, frankly, you need this time to heal instead of looking for a partner. Your standards aren’t high—they’re unreasonable. Love is not a battlefield, but you treat it like one",
+ //         criteria: {chillAns: "D", deluluAns: "D", redFlagAns: "D" , difficultAs:"D"}
+ //     },
+ // ]
+
 
 const userAnswers = {
     situational: "C",
@@ -43,26 +72,30 @@ const userAnswers = {
 let matchScoreArray = []
 let matchCountPairs =[]
 
-function matchCriteria(userAnswers, characterCriteria) {
-    let matchCount = 0;
-    for (const key in characterCriteria) {
-        if (userAnswers[key] === characterCriteria[key]) {
-            matchCount++;
-        }
-    }
-    return matchCount;
-}
-function getRedFlag(){
-    const matchCountPairs = redFlags.map((character)=>{
-        const matchScore =  matchCriteria(userAnswers,character.criteria)
-        return {character:character.name, matchScore}
-    })
-    const maxMatchScore = Math.max(...matchCountPairs.map((item)=>(item.matchScore)))
-    const redFlagObject = matchCountPairs.find((match)=>match.matchScore === maxMatchScore)
-    console.log(redFlagObject.character)
-    return redFlagObject.character
-}
+// function matchCriteria(userAnswers, characterCriteria) {
+//     let matchCount = 0;
+//     for (const key in characterCriteria) {
+//         if (userAnswers[key] === characterCriteria[key]) {
+//             matchCount++;
+//         }
+//     }
+//     return matchCount;
+// }
+//
+// function getRedFlag(){
+//     const matchCountPairs = daterType.map((character)=>{
+//         const matchScore =  matchCriteria(userAnswers,character.criteria)
+//         return {character:character.name, matchScore}
+//     })
+//     const maxMatchScore = Math.max(...matchCountPairs.map((item)=>(item.matchScore)))
+//     const redFlagObject = matchCountPairs.find((match)=>match.matchScore === maxMatchScore)
+//     console.log(redFlagObject.character)
+//     return redFlagObject.character
+// }
 getRedFlag()
+
+app.use("/questions",questionRoute)
+
 
 app.get("/", (req,res)=>{
     res.send("Hello World")
