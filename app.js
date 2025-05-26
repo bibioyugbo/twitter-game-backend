@@ -92,7 +92,6 @@ let matchCountPairs =[]
 //     console.log(redFlagObject.character)
 //     return redFlagObject.character
 // }
-getRedFlag()
 
 app.use("/questions",questionRoute)
 
