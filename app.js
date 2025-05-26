@@ -1,5 +1,5 @@
 const express = require("express")
-const PORT =8000
+const PORT = process.env.PORT || 8000;
 const app = express()
 const cors = require('cors');
 const questionRoute = require('./questions/DatingQuestions')
