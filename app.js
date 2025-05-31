@@ -61,13 +61,7 @@ const redFlags = [
  // ]
 
 
-const userAnswers = {
-    situational: "C",
-    financial: "B",
-    sexAndKink: "C",
-    friends: "A",
-    morals: "C"
-};
+
 
 let matchScoreArray = []
 let matchCountPairs =[]
